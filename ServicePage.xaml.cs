@@ -32,6 +32,109 @@ namespace Familiya_Autoservice
             ComboType.SelectedIndex = 0;
             UpdateSerices();
         }
+        private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
+        }
+
+        private void LeftDirButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(1, null);
+        }
+        private void RightDirButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(2, null);
+        }
+        int CountRecords;
+        int CountPage;
+        int CurrentPage = 0;
+        List<Service> CurrentPageList = new List<Service>();
+        List<Service> TableList;
+
+        private void ChangePage(int direction, int? selectedPage)
+        {
+            CurrentPageList.Clear();
+            CountRecords = TableList.Count;
+            if(CountRecords%10>0)
+            {
+                CountPage = CountRecords / 10 + 1;
+            }
+            else
+            {
+                CountPage = CountRecords / 10;
+            }
+
+            Boolean Ifupdate = true;
+
+            int min;
+            if(selectedPage.HasValue)
+            {
+                if(selectedPage>=0&& selectedPage<=CountPage)
+                {
+                    CurrentPage = (int)selectedPage;
+                    min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                    for(int i=CurrentPage*10;i<min;i++)
+                    {
+                        CurrentPageList.Add(TableList[i]);
+                    }
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if(CurrentPage>0)
+                        {
+                            CurrentPage--;
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false; 
+                        }
+                        break;
+                    case 2:
+                        if (CurrentPage < CountPage - 1)
+                        {
+                            CurrentPage++;
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false;
+                        }
+                        break;
+                }
+
+            }
+            if(Ifupdate)
+            {
+                PageListBox.Items.Clear();
+                for(int i=1;i<=CountPage;i++)
+                {
+                    PageListBox.Items.Add(i);
+                }
+                PageListBox.SelectedIndex = CurrentPage;
+
+                min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                TBCount.Text = min.ToString();
+                TBAllRecords.Text = " из " + CountRecords.ToString();
+                ServiceListViev.ItemsSource = CurrentPageList;
+
+                ServiceListViev.Items.Refresh();
+
+            }
+
+        }
 
         private void UpdateSerices()
         {
@@ -66,12 +169,15 @@ namespace Familiya_Autoservice
             
             if(RButtonDown.IsChecked.Value)
             {
-                ServiceListViev.ItemsSource = currentServices.OrderByDescending(p => p.Cost).ToList();
+                currentServices = currentServices.OrderByDescending(p => p.Cost).ToList();
             }
             if(RButtonUp.IsChecked.Value)
             {
-                ServiceListViev.ItemsSource = currentServices.OrderBy(p => p.Cost).ToList();
+                currentServices = currentServices.OrderBy(p => p.Cost).ToList();
             }
+            ServiceListViev.ItemsSource = currentServices;
+            TableList = currentServices;
+            ChangePage(0, 0);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -98,6 +204,33 @@ namespace Familiya_Autoservice
         {
             UpdateSerices();
         }
-
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var currenService = (sender as Button).DataContext as Service;
+            var currenClientServices = Balahnin_avtoservisEntities.GetContext().ClientService.ToList();
+            currenClientServices = currenClientServices.Where(p => p.ServiceID == currenService.ID).ToList();
+            if (currenClientServices.Count != 0)
+            {
+                MessageBox.Show("Невозможно выполнить удаление, так как существуют записи на эту услугу");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Balahnin_avtoservisEntities.GetContext().Service.Remove(currenService);
+                        Balahnin_avtoservisEntities.GetContext().SaveChanges();
+                        ServiceListViev.ItemsSource = Balahnin_avtoservisEntities.GetContext().Service.ToList();
+                        UpdateSerices();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+        }
     }
 }
