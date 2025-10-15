@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Familiya_Autoservice"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Услуга автосервиса" FontFamily="Tw Cen MT">
+      Title="Услуга автосервиса" FontFamily="Tw Cen MT" IsVisibleChanged="Page_IsVisibleChanged" >
     <Grid>       
         <Grid.RowDefinitions>
         <RowDefinition Height="auto"></RowDefinition>
@@ -35,7 +35,7 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5">
             <RadioButton Content="По возрастанию стоимости" GroupName="Sort" Width="300" FontSize="20" Checked="RButtonDown_Checked" Name="RButtonDown"></RadioButton>
             <RadioButton Content="По убыванию стоимости" GroupName="Sort" Width="300" FontSize="20" Checked="RButtonDown_Checked" Name="RButtonUp"></RadioButton>
-            <Button Name="Dobav" Content="Добавить" Margin="2" FontSize="20" HorizontalAlignment="Right" ></Button>
+            <Button Name="AddButton" Content="Добавить" Click="AddButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Button>
         </StackPanel>
       <ListView Name="ServiceListViev" Grid.Row="2"> 
             <ListView.ItemTemplate>
@@ -68,7 +68,7 @@
                         <TextBlock Text="{Binding Duration}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" FontSize="20" ></TextBlock>
                         <TextBlock Text="{Binding DiscountIt, StringFormat=*скидка {0} % }" Opacity="{Binding DiscountIt}" Margin="5" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="16" ></TextBlock>
                         <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" >
-                            <Button Name="EditButton" Content="редактировать" Margin="2" ></Button>
+                            <Button Name="EditButton" Content="редактировать" Margin="2" Click="EditButton_Click" ></Button>
                             <Button Name="DeleteButton" Content="удалить" Margin="2" Click="DeleteButton_Click"></Button>
                         </StackPanel>
                     </Grid>

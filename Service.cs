@@ -27,7 +27,7 @@ namespace Familiya_Autoservice
         public string Duration { get; set; }
         public decimal Cost { get; set; }
         public double Discount { get; set; }
-        public int DiscountIt { get { return (int)(Discount * 100); } }
+        public int DiscountIt { get { return (int)(Discount * 100); } set { Discount = value / 100.0; } }
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

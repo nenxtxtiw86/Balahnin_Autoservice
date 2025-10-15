@@ -136,6 +136,14 @@ namespace Familiya_Autoservice
 
         }
 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Service));
+        }
         private void UpdateSerices()
         {
             var currentServices = Balahnin_avtoservisEntities.GetContext().Service.ToList();
@@ -179,7 +187,14 @@ namespace Familiya_Autoservice
             TableList = currentServices;
             ChangePage(0, 0);
         }
-
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(Visibility == Visibility.Visible)
+            {
+                Balahnin_avtoservisEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                ServiceListViev.ItemsSource = Balahnin_avtoservisEntities.GetContext().Service.ToList();
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditPage());

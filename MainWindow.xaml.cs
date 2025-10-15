@@ -31,7 +31,7 @@ namespace Familiya_Autoservice
         {
             Manager.MainFrame.GoBack();
         }
-
+  
         private void MainFrame_ContentRendered(object sender, EventArgs e)
         {
             if(MainFrame.CanGoBack)
