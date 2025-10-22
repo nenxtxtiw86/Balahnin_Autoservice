@@ -195,6 +195,10 @@ namespace Familiya_Autoservice
                 ServiceListViev.ItemsSource = Balahnin_avtoservisEntities.GetContext().Service.ToList();
             }
         }
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new SignUpPage((sender as Button).DataContext as Service));
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditPage());
@@ -219,6 +223,7 @@ namespace Familiya_Autoservice
         {
             UpdateSerices();
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var currenService = (sender as Button).DataContext as Service;

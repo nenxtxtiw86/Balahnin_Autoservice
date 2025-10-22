@@ -41,7 +41,7 @@ namespace Familiya_Autoservice
                 errors.AppendLine("Укажите стоимость услуги");
             if ( _currentServise.DiscountIt < 0 || _currentServise.DiscountIt > 100)
                 errors.AppendLine("Укажите скидку");
-            if (string.IsNullOrWhiteSpace(_currentServise.Duration))
+            if (_currentServise.Duration <= 0)
                 errors.AppendLine("Укажите длительность услуги");
             if(errors.Length > 0)
             {

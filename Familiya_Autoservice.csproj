@@ -67,57 +67,60 @@
     <Compile Include="AddEditPage.xaml.cs">
       <DependentUpon>AddEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BalahninModel1.Context.cs">
+    <Compile Include="BalahninModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BalahninModel1.Context.tt</DependentUpon>
+      <DependentUpon>BalahninModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="BalahninModel1.cs">
+    <Compile Include="BalahninModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="BalahninModel1.Designer.cs">
+    <Compile Include="BalahninModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BalahninModel1.edmx</DependentUpon>
+      <DependentUpon>BalahninModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="Client.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ClientService.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DocumentByService.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Gender.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Manufacturer.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductPhoto.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductSale.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Service.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ServicePage.xaml.cs">
       <DependentUpon>ServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServicePhoto.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tag.cs">
-      <DependentUpon>BalahninModel1.tt</DependentUpon>
+      <DependentUpon>BalahninModel.tt</DependentUpon>
     </Compile>
     <Page Include="AddEditPage.xaml">
       <SubType>Designer</SubType>
@@ -136,6 +139,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ServicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,12 +165,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="BalahninModel1.edmx">
+    <EntityDeploy Include="BalahninModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BalahninModel1.Designer.cs</LastGenOutput>
+      <LastGenOutput>BalahninModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="BalahninModel1.edmx.diagram">
-      <DependentUpon>BalahninModel1.edmx</DependentUpon>
+    <None Include="App.Config" />
+    <None Include="BalahninModel.edmx.diagram">
+      <DependentUpon>BalahninModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -172,19 +180,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="BalahninModel1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BalahninModel1.Context.cs</LastGenOutput>
-      <DependentUpon>BalahninModel1.edmx</DependentUpon>
-    </Content>
-    <Content Include="BalahninModel1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BalahninModel1.edmx</DependentUpon>
-      <LastGenOutput>BalahninModel1.cs</LastGenOutput>
-    </Content>
     <Resource Include="res\picture.png" />
     <Resource Include="Услуги автосервиса\diz.jpg" />
     <Resource Include="Услуги автосервиса\rulevoe-upravlenie-avtomobilya.jpg" />
@@ -211,6 +206,17 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="BalahninModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BalahninModel.edmx</DependentUpon>
+      <LastGenOutput>BalahninModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BalahninModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BalahninModel.edmx</DependentUpon>
+      <LastGenOutput>BalahninModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,20 +12,16 @@ namespace Familiya_Autoservice
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
     
-
-
     public partial class Balahnin_avtoservisEntities : DbContext
-    {   
-        private static Balahnin_avtoservisEntities _context;
-
-    public static Balahnin_avtoservisEntities GetContext()
     {
-        if ( _context == null)
-            _context = new Balahnin_avtoservisEntities();
-        return _context;
-    }
+       private static Balahnin_avtoservisEntities _context;
+        public static Balahnin_avtoservisEntities GetContext()
+        {
+            if (_context == null)
+                _context = new Balahnin_avtoservisEntities();
+            return _context;
+        }
         public Balahnin_avtoservisEntities()
             : base("name=Balahnin_avtoservisEntities")
         {
