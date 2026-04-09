@@ -7,12 +7,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Услуга автосервиса" FontFamily="Tw Cen MT" IsVisibleChanged="Page_IsVisibleChanged" >
-    <Grid>       
+    <Grid>
         <Grid.RowDefinitions>
-        <RowDefinition Height="auto"></RowDefinition>
-        <RowDefinition Height="auto"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -37,10 +37,10 @@
             <RadioButton Content="По убыванию стоимости" GroupName="Sort" Width="300" FontSize="20" Checked="RButtonDown_Checked" Name="RButtonUp"></RadioButton>
             <Button Name="AddButton" Content="Добавить" Click="AddButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></Button>
         </StackPanel>
-      <ListView Name="ServiceListViev" Grid.Row="2"> 
+        <ListView Name="ServiceListViev" Grid.Row="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="{Binding FonStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
@@ -51,22 +51,30 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                    
-                    <Image Width="200" Grid.Column="0" Grid.RowSpan="4" Stretch="UniformToFill" HorizontalAlignment="Center">
+
+                        <Image Width="200" Grid.Column="0" Grid.RowSpan="4" Stretch="UniformToFill" HorizontalAlignment="Center">
                             <Image.Source>
                                 <Binding Path="MainImagePath">
                                     <Binding.TargetNullValue>
                                         <ImageSource>
-                                          res/picture.png
+                                            res/picture.png
                                         </ImageSource>
                                     </Binding.TargetNullValue>
                                 </Binding>
                             </Image.Source>
-                    </Image>
-                      <TextBlock Text="{Binding Title}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
-                        <TextBlock Text="{Binding Cost, StringFormat={}{0:0} рублей за}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
-                        <TextBlock Text="{Binding Duration}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" FontSize="20" ></TextBlock>
-                        <TextBlock Text="{Binding DiscountIt, StringFormat=*скидка {0} % }" Opacity="{Binding DiscountIt}" Margin="5" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="16" ></TextBlock>
+                        </Image>
+
+                        <TextBlock Text="{Binding Title}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="{Binding OldCost}" FontSize="20" TextDecorations="Strikethrough" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding NewCost}" FontSize="20" Margin="5"></TextBlock>
+                            <TextBlock Text="рублей за " FontSize="20" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding Duration}" FontSize="20" ></TextBlock>
+                            <TextBlock Text="мин." FontSize="20" Margin="5"></TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="{Binding DiscountDisplay}" 
+           Margin="5" Grid.Column="1" Grid.Row="2" 
+           HorizontalAlignment="Left" FontSize="16" />
                         <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" >
                             <Button Name="SignUpButton" Content="записать" Margin="2" Click="SignUpButton_Click" ></Button>
                             <Button Name="EditButton" Content="редактировать" Margin="2" Click="EditButton_Click" ></Button>
@@ -91,16 +99,4 @@
         </StackPanel>
 
     </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
 </Page>

@@ -31,41 +31,59 @@ namespace Familiya_Autoservice
             if (SelectedService != null)
                 _currentServise = SelectedService;
             DataContext = _currentServise;
-        }  
+        }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
             if (string.IsNullOrWhiteSpace(_currentServise.Title))
                 errors.AppendLine("Укажите название услуги");
-            if (_currentServise.Cost==0)
+            if (_currentServise.Cost == 0)
                 errors.AppendLine("Укажите стоимость услуги");
-            if ( _currentServise.DiscountIt < 0 || _currentServise.DiscountIt > 100)
+            if (_currentServise.Discount < 0 || _currentServise.Discount > 100)
                 errors.AppendLine("Укажите скидку");
             if (_currentServise.Duration <= 0)
                 errors.AppendLine("Укажите длительность услуги");
-            if(errors.Length > 0)
+            if (_currentServise.Duration > 240)
+                errors.AppendLine("Длительность не может быть больше 240 минут");
+            if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
                 return;
             }
-            if (_currentServise.ID == 0)
-                Balahnin_avtoservisEntities.GetContext().Service.Add(_currentServise);
-            try
+
+            var allServices = Balahnin_autoservisEntities.GetContext().Service.ToList();
+            if (_currentServise.ID != 0) 
             {
-                Balahnin_avtoservisEntities.GetContext().SaveChanges();
-                MessageBox.Show("информация сохранена");
-                Manager.MainFrame.GoBack();
+                allServices = allServices.Where(p => p.Title == _currentServise.Title && p.ID != _currentServise.ID).ToList();
             }
-            catch(Exception ex)
+            else 
             {
-                MessageBox.Show(ex.Message.ToString());
+                allServices = allServices.Where(p => p.Title == _currentServise.Title).ToList();
             }
-        }
+
+            if (allServices.Count == 0)
+            {
+                if (_currentServise.ID == 0)
+                    Balahnin_autoservisEntities.GetContext().Service.Add(_currentServise);
+
+                try
+                {
+                    Balahnin_autoservisEntities.GetContext().SaveChanges();
+                    MessageBox.Show("информация сохранена");
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
             else
             {
                 MessageBox.Show("Такая услуга уже существует");
             }
-        }   
+        
+        }
     }
-
 }
+    
+

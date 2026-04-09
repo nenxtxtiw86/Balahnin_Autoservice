@@ -11,7 +11,8 @@ namespace Familiya_Autoservice
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Windows.Media;
+
     public partial class Service
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,19 +21,83 @@ namespace Familiya_Autoservice
             this.ClientService = new HashSet<ClientService>();
             this.ServicePhoto = new HashSet<ServicePhoto>();
         }
-    
+
         public int ID { get; set; }
         public string Title { get; set; }
         public string MainImagePath { get; set; }
         public int Duration { get; set; }
         public decimal Cost { get; set; }
-        public double Discount { get; set; }
-        public int DiscountIt { get { return (int)(Discount * 100); } set { Discount = value / 100.0; } }
+        public Nullable<double> Discount { get; set; }
+        public double DiscountIt
+        {
+            get
+            {
+                // if (Discount.HasValue)
+                // { return (int)(Discount.Value  * 100);
+                return (int)(Discount * 100);
+               // }
+              //  return 0; 
+            }
+            set
+            {
+                Discount = value / 100.0;
+            }
+        }
+        public string DiscountDisplay => Discount > 0 ? $"Скидка {Discount} %" : "";
         public string Description { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientService> ClientService { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServicePhoto> ServicePhoto { get; set; }
+
+
+        public string OldCost
+        {
+            get
+            {
+                if (Discount > 0)
+                {
+                    return Cost.ToString();
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+        public decimal NewCost
+        {
+            get
+            {
+                if (Discount > 0)
+                {
+                    return ((decimal)Cost - (decimal)Cost * (decimal)Discount / 100);
+                }
+                else
+                {
+                    return (decimal)Cost;
+                }
+            }
+        }
+        public SolidColorBrush FonStyle
+        {
+            get
+            {
+                if (Discount > 0)
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                }
+                else
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
+                }
+            }
+        }
     }
+
+
+
+
+
 }

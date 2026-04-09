@@ -29,7 +29,7 @@ namespace Familiya_Autoservice
 
             DataContext = _currentService;
 
-            var _currentClient = Balahnin_avtoservisEntities.GetContext().Client.ToList();
+            var _currentClient = Balahnin_autoservisEntities.GetContext().Client.ToList();
 
             ComboClient.ItemsSource = _currentClient;
 
@@ -60,10 +60,10 @@ namespace Familiya_Autoservice
             _currentClientService.StartTime = Convert.ToDateTime(StartDate.Text + " " + TBStart.Text);
 
             if (_currentClientService.ServiceID==0)
-               Balahnin_avtoservisEntities.GetContext().ClientService.Add(_currentClientService);
+               Balahnin_autoservisEntities.GetContext().ClientService.Add(_currentClientService);
             try
             {
-                Balahnin_avtoservisEntities.GetContext().SaveChanges();
+                Balahnin_autoservisEntities.GetContext().SaveChanges();
                 MessageBox.Show("информация сохранена");
                 Manager.MainFrame.GoBack();
             }
@@ -72,18 +72,38 @@ namespace Familiya_Autoservice
                 MessageBox.Show(ex.Message.ToString());
             }
 
-
-
         }
+        private void TBStart_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string s = TBStart.Text;
+            string[] start = s.Split(':');
+            if (start.Length != 2)
+            {
+                TBEnd.Text = "Ошибка в формате времени";
+                return;
+            }
 
+            if (s.Length != 5 || s[2] != ':')
+            {
+                TBEnd.Text = "Ошибка в формате времени.(Пиши часы и минуты через :)";
+                return;
+            }
+            if (!int.TryParse(start[0], out int startHour) || !int.TryParse(start[1], out int startMin))
+            {
+                TBEnd.Text = "Ошибка в формате времени";
+                return;
+            }
+            if (startHour < 0 || startHour > 23 || startMin < 0 || startMin > 59)
+            {
+                TBEnd.Text = "Ошибка в формате времени";
+                return;
+            }
 
-
-
-
-
-
-
-
+            int sum = startHour * 60 + startMin + _currentService.Duration;
+            int endHour = sum / 60;
+            int endMin = sum % 60;
+            endHour = endHour % 24;
+            TBEnd.Text = $"{endHour:D2}:{endMin:D2}";
+        }
     }
-    
 }

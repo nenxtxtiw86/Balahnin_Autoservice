@@ -22,8 +22,8 @@ namespace Familiya_Autoservice
         }
     
         public int ID { get; set; }
-        public int ServiceID { get; set; }
         public int ClientID { get; set; }
+        public int ServiceID { get; set; }
         public System.DateTime StartTime { get; set; }
         public string Comment { get; set; }
     
