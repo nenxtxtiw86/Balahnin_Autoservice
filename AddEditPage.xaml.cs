@@ -61,7 +61,11 @@ namespace Familiya_Autoservice
                 MessageBox.Show(ex.Message.ToString());
             }
         }
-        
+            else
+            {
+                MessageBox.Show("Такая услуга уже существует");
+            }
+        }   
     }
 
 }
